@@ -1,15 +1,34 @@
-import { DragEndEvent } from "@dnd-kit/core";
 import { ProfileContext } from "../components/Context";
-import { ChangeEvent, useContext, useState } from "react";
+import { ChangeEvent, DragEvent, useContext, useState } from "react";
+import Input from "../components/Input";
+import SaveLinks from "../components/SaveLinks";
 
 export default function Profile() {
   const { profile, setProfile } = useContext(ProfileContext);
 
-  function handleDrop(e: ChangeEvent<HTMLInputElement>) {
+  function handleFileUpload(e: ChangeEvent<HTMLInputElement>) {
     const f = new FileReader();
     const targetFile = e.target.files;
 
-    if (targetFile && targetFile[0]) {
+    if (targetFile && targetFile[0].type.match("image/*")) {
+      f.readAsDataURL(targetFile[0]);
+      f.onloadend = (ev) => {
+        const file = ev.target?.result;
+        setProfile((prev) => {
+          return {
+            ...prev,
+            img: `${file}`,
+          };
+        });
+      };
+    }
+  }
+
+  function handleDrag(e: DragEvent) {
+    e.preventDefault();
+    const targetFile = e.dataTransfer.files;
+    const f = new FileReader();
+    if (targetFile && targetFile[0].type.match("image/*")) {
       f.readAsDataURL(targetFile[0]);
       f.onloadend = (ev) => {
         const file = ev.target?.result;
@@ -36,13 +55,16 @@ export default function Profile() {
             Add your details to create a personal touch to your profile.
           </p>
         </div>
-
         <div className="bg-veryLightGray p-3 rounded-md grid grid-cols-3  gap-3 items-center">
-          <p className="text-darkGray">Profile Picture</p>
+          <p className="text-darkGray font-semibold">Profile Picture</p>
 
           <div
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={handleDrag}
             className="bg-veryLightPurple h-[190px] w-[190px] rounded-md bg-opacity-50 bg-no-repeat bg-cover"
-            style={{ backgroundImage: profile.img? `url(${profile.img})` : undefined }}
+            style={{
+              backgroundImage: profile.img ? `url(${profile.img})` : undefined,
+            }}
           >
             <label
               htmlFor="dropfile"
@@ -62,14 +84,14 @@ export default function Profile() {
                   profile.img && "text-white"
                 } `}
               >
-                + upload image
+                {profile.img ? "change image" : "+ upload image"}
               </p>
               <input
                 type="file"
                 name=""
                 id="dropfile"
                 className="hidden"
-                onChange={handleDrop}
+                onChange={handleFileUpload}
                 accept="image/*"
               />
             </label>
@@ -81,6 +103,50 @@ export default function Profile() {
             </p>
           </div>
         </div>
+        <div className="flex flex-col gap-5 rounded-md bg-veryLightGray p-3">
+          <div className="flex justify-between items-center gap-10">
+            <label
+              htmlFor="first name"
+              className="capitalize whitespace-nowrap text-darkGray"
+            >
+              first name*
+            </label>
+            <Input
+              name={"fName"}
+              value={profile.fName}
+              type="text"
+              placeholder="eg. John "
+              className="placeholder:text-darkGray bg-white w-[500px] px-5 rounded-md border border-transparent"
+            />
+          </div>{" "}
+          <div className="flex justify-between items-center gap-10">
+            <label htmlFor="last name" className="capitalize text-darkGray whitespace-nowrap">
+              last name*
+            </label>
+            <Input
+              name={"lName"}
+              value={profile.lName}
+              type="text"
+              placeholder="eg. Appleseed"
+              className="placeholder:text-darkGray  bg-white w-[500px] px-5 rounded-md border border-transparent"
+            />
+          </div>
+          <div className="flex justify-between items-center gap-10">
+            <label htmlFor="Email" className="capitalize text-darkGray whitespace-nowrap">
+              email
+            </label>
+            <Input
+              value={profile.email}
+              name={"email"}
+              type="email"
+              placeholder="eg. email@example.com"
+              className="placeholder:text-darkGray bg-white w-[500px] px-5 rounded-md border border-transparent"
+            />
+          </div>
+        </div>
+        
+        <hr className="text-lightPurple" />
+        <SaveLinks  />
       </form>
     </>
   );

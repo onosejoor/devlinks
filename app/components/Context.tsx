@@ -18,7 +18,14 @@ type UserProfileType = {
   setProfile: Dispatch<SetStateAction<ProfileData>>;
 };
 
+const initial: ProfileData = {
+  fName: "",
+  lName: "",
+  img: "",
+  email: "",
+};
+
 export const ProfileContext = createContext<UserProfileType>({
-  profile: {},
+  profile: initial,
   setProfile: () => {},
 });

@@ -126,21 +126,29 @@ export default function PhoneMockup({
                 <Img
                   src={imgSrc}
                   alt={fName || ""}
-                  className="h-[100px] mx-auto rounded-full w-[100px] border-4 border-ogColor"
+                  className="h-[100px] mx-auto rounded-full w-[100px] border-4 object-cover border-ogColor"
                 />
               )}
-              <p className="bg-white capitalize translate-y-full text-center">
-                {fName && fName} {lName && lName}
-              </p>
-              {email && (
+              <div className="flex flex-col gap-3 relative">
                 <p
-                  className={`bg-white translate-y-full ${
-                    !lName && !fName && "mt-5"
-                  }  text-center`}
+                  className={`bg-white capitalize text-lg w-full font-semibold translate-y-full ${
+                    !imgSrc && "absolute top-[100px] w-full"
+                  }  text-center -mt-[10px] text-gray`}
                 >
-                  {email}
+                  {fName && fName} {lName && lName}
                 </p>
-              )}{" "}
+                {email && (
+                  <p
+                    className={`bg-white translate-y-full ${
+                      !imgSrc && "absolute top-[130px] w-full"
+                    }  whitespace-nowrap text-ellipsis overflow-hidden ${
+                      !lName && !fName && "mt-5"
+                    }  text-center`}
+                  >
+                    {email}
+                  </p>
+                )}{" "}
+              </div>
             </div>
             <div className="absolute max-w-[247px] w-full top-[44%] flex flex-col gap-5 m-auto translate-x-[35px]">
               {links && links?.length > 0

@@ -2,7 +2,7 @@ import { MouseEvent, useContext } from "react";
 import { Context } from "./Context";
 import { matchUrlPattern } from "../lib/ClientFunctions";
 
-export default function SaveLinks({disabled} :  {disabled: boolean}) {
+export default function SaveLinks({disabled} :  {disabled?: boolean}) {
   const { links, setLinks } = useContext(Context);
 
   function save(e: MouseEvent<HTMLButtonElement>) {
