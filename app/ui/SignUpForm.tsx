@@ -1,17 +1,55 @@
-'use client'
+"use client";
 
 import Link from "next/link";
 import FormInput from "../components/Forminput";
 import Label from "../components/Label";
 import AuthButton from "../components/AuthButton";
-import { useActionState } from "react";
+import { ChangeEvent, useActionState, useState } from "react";
+import { InputError } from "../lib/Functions";
+
+type Input = {
+  email: string;
+  password: string;
+  confirm_password: string;
+};
 
 const SignUpForm: React.FC = () => {
+  const [state, action] = useActionState(hi, null);
+  const [error, setError] = useState<Input | null>(null);
+  const [inputs, setInputs] = useState<Input>({
+    email: "",
+    password: "",
+    confirm_password: "",
+  });
+
   async function hi(state: void | null, formData: FormData) {
-    console.log(formData.getAll('email'), formData.getAll('password'));
-    
+    const keys = Object.keys(inputs);
+    const keyError = {};
+    keys.forEach((key) => {
+      // ts-ignore
+      if ((inputs[key] as string).trim()) {
+        keyError[key] = "Can't be null";
+        setError(keyError);
+        console.log(keyError, key);
+      }
+    });
   }
-  const [state, action] = useActionState(hi, null)
+
+  function onChange(e: ChangeEvent<HTMLInputElement>) {
+    const { name, value } = e.target;
+    setInputs((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+    setError((prev) => {
+      return {
+        ...prev,
+        [name]: "",
+      };
+    });
+  }
 
   return (
     <>
@@ -51,6 +89,9 @@ const SignUpForm: React.FC = () => {
             <div className="flex flex-col gap-2 w-full">
               <Label text="Email address" />
               <FormInput
+                change={onChange}
+                name="email"
+                // error={error}
                 type="email"
                 placeholder="eg. alex@email.com"
                 svg={
@@ -72,6 +113,9 @@ const SignUpForm: React.FC = () => {
             <div className="flex flex-col gap-2">
               <Label text="Password" />
               <FormInput
+                change={onChange}
+                name="password"
+                // error={error}
                 type="password"
                 placeholder="eg. alex@email.com"
                 svg={
@@ -94,6 +138,9 @@ const SignUpForm: React.FC = () => {
               <div className="flex flex-col gap-2">
                 <Label text="Confirm Password" />
                 <FormInput
+                  change={onChange}
+                  name="confirm_password"
+                  // error={error}
                   type="password"
                   placeholder="eg. alex@email.com"
                   svg={

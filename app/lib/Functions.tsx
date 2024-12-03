@@ -14,11 +14,17 @@ export interface PlatformLink {
   regex?: string | RegExp | `${string}`;
 }
 
+export interface InputError {
+  name: PlatformLink['name']
+  error: PlatformLink['error']
+}
+
 export interface ProfileData {
   fName: string;
   lName: string;
   img?: string;
   email: string;
+  error?: InputError[]
 }
 
 interface Creds {
@@ -54,4 +60,11 @@ export async function createUser({ email, password }: Creds) {
   }
   const saltRounds = 10;
   const hash = await bcrypt.hash(password, saltRounds);
+}
+
+export async function userFunction(formData: FormData) {
+  const email = formData.get('email') as string
+  const password = formData.get('password') as string
+
+  
 }
