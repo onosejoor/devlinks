@@ -24,12 +24,15 @@ export async function decrypt(session: string | undefined = "") {
   }
 }
 
-export async function creteSession(email: string) {
+export async function createSession(email: string) {
+  const cookie = await cookies()
   const date = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+  console.log("hi");
+  
 
   const encodeSession = await encrypt({ email });
 
-  (await cookies()).set("devlink_session", encodeSession, {
+  cookie.set("devlink_session", encodeSession, {
     httpOnly: true,
     expires: date,
     secure: true,

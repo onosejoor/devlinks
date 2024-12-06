@@ -31,6 +31,7 @@ export default function AddLink({ platform, link }: Link) {
               icon: props.icon,
               name: props.name,
               url: props.url,
+              regex: props.regex
             }
           : pre;
       });
@@ -69,7 +70,7 @@ export default function AddLink({ platform, link }: Link) {
     isDragging,
   } = useSortable({
     id: link.id,
-    animateLayoutChanges: ({ isSorting, wasDragging }) => isSorting || false,
+    animateLayoutChanges: ({ isSorting }) => isSorting || false,
   });
 
   const style: CSSProperties = {
@@ -86,7 +87,6 @@ export default function AddLink({ platform, link }: Link) {
 
   return (
     <>
-      <Toast message="hhsvshvsj" />
       <div
         ref={setNodeRef}
         style={style}

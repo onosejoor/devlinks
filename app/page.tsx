@@ -1,11 +1,13 @@
+import { getMovie } from "./lib/Functions";
 import MainSection from "./ui/Main";
 import Nav from "./ui/Nav";
 
-export default function Home() {
+export default async function Home() {
+  const movie = await getMovie()
   return (
     <>
       <Nav />
-      <MainSection />
+      <MainSection movie={movie.data} />
     </>
   );
 }

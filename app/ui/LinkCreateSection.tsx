@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext } from "react";
+import { FormEvent, useContext } from "react";
 import AddLink from "../components/AddLink";
 import {
   KeyboardSensor,
@@ -10,9 +10,9 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import NothingHere from "./NothingHere";
-import { PlatformLink } from "../lib/Functions";
+import { insertLink, PlatformLink } from "../lib/Functions";
 import { Context } from "../components/Context";
-import { PiGithubLogoFill } from "react-icons/pi";
+import { PiDevToLogoFill, PiGithubLogoFill } from "react-icons/pi";
 import AddLinkButton from "../components/AddLinkButton";
 import SaveLinks from "../components/SaveLinks";
 import { DndContext, DragEndEvent, useDroppable } from "@dnd-kit/core";
@@ -22,6 +22,23 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import {
+  SiCodewars,
+  SiFrontendmentor,
+  SiGitlab,
+  SiHashnode,
+} from "react-icons/si";
+import { IoLogoTwitter } from "react-icons/io";
+import {
+  FaCodepen,
+  FaFacebook,
+  FaFreeCodeCamp,
+  FaLinkedin,
+  FaStackOverflow,
+  FaTwitch,
+  FaYoutube,
+} from "react-icons/fa";
+import { matchUrlPattern } from "../lib/ClientFunctions";
 
 export default function LinkCreateSection({ data }: { data: PlatformLink[] }) {
   const { links, setLinks } = useContext(Context);
@@ -75,10 +92,14 @@ export default function LinkCreateSection({ data }: { data: PlatformLink[] }) {
   const { setNodeRef } = useDroppable({
     id: "droppable",
   });
+
+  async function save() {
+    await insertLink(links);
+  }
   return (
     <>
       <form
-        // action={save}
+        action={save}
         className="flex-1 flex flex-col gap-5 p-7 bg-white rounded-md"
       >
         <div className="flex flex-col  gap-10">
@@ -94,10 +115,7 @@ export default function LinkCreateSection({ data }: { data: PlatformLink[] }) {
           </div>
           <AddLinkButton links={links} setContextLinks={setContextLinks} />
         </div>
-        <DndContext
-          onDragEnd={handleDrag}
-          sensors={sensors}
-        >
+        <DndContext onDragEnd={handleDrag} sensors={sensors}>
           <div
             className="flex flex-col gap-10 min-h-[450px] md:max-h-[500px] no-scrollbar relative md:overflow-scroll"
             ref={setNodeRef}

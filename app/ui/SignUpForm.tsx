@@ -4,33 +4,47 @@ import Link from "next/link";
 import FormInput from "../components/Forminput";
 import Label from "../components/Label";
 import AuthButton from "../components/AuthButton";
-import { ChangeEvent, useActionState, useState } from "react";
-import { InputError } from "../lib/Functions";
-
-type Input = {
-  email: string;
-  password: string;
-  confirm_password: string;
-};
+import {
+  ChangeEvent,
+  FormEvent,
+  useActionState,
+  useEffect,
+  useState,
+} from "react";
+import { createUser, Input, SignUpError } from "../lib/Functions";
 
 const SignUpForm: React.FC = () => {
-  const [state, action] = useActionState(hi, null);
-  const [error, setError] = useState<Input | null>(null);
+  const [state, action] = useActionState(createUser, undefined);
+  const [error, setError] = useState<SignUpError>({});
   const [inputs, setInputs] = useState<Input>({
     email: "",
     password: "",
     confirm_password: "",
   });
 
-  async function hi(state: void | null, formData: FormData) {
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
+
+  function handleValidations(e: FormEvent) {
     const keys = Object.keys(inputs);
-    const keyError = {};
+    const keyError: SignUpError = {};
     keys.forEach((key) => {
-      // ts-ignore
-      if ((inputs[key] as string).trim()) {
-        keyError[key] = "Can't be null";
-        setError(keyError);
-        console.log(keyError, key);
+      if (!inputs[key as keyof Input].trim()) {
+        e.preventDefault();
+        keyError[key as keyof SignUpError] = "Can't be empty";
+        return setError(keyError);
+      } else if (
+        inputs["password"] &&
+        inputs["confirm_password"] &&
+        inputs["password"] !== inputs["confirm_password"]
+      ) {
+        e.preventDefault();
+        keyError["confirm_password"] = "Please check again";
+        keyError["password"] = "Please check again";
+        return setError(keyError);
+      } else {
+        setError({});
       }
     });
   }
@@ -85,14 +99,19 @@ const SignUpForm: React.FC = () => {
               let&apos;s get you started sharing your links!
             </p>
           </div>
-          <form className="flex gap-5 flex-col" action={action}>
+          <form
+            className="flex gap-5 flex-col"
+            action={action}
+            onSubmit={handleValidations}
+          >
             <div className="flex flex-col gap-2 w-full">
               <Label text="Email address" />
               <FormInput
                 change={onChange}
                 name="email"
-                // error={error}
+                error={error?.email}
                 type="email"
+                value={inputs.email}
                 placeholder="eg. alex@email.com"
                 svg={
                   <svg
@@ -115,9 +134,10 @@ const SignUpForm: React.FC = () => {
               <FormInput
                 change={onChange}
                 name="password"
-                // error={error}
+                error={error?.password}
+                value={inputs.password}
                 type="password"
-                placeholder="eg. alex@email.com"
+                placeholder="Atleast 8 characters"
                 svg={
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -140,9 +160,10 @@ const SignUpForm: React.FC = () => {
                 <FormInput
                   change={onChange}
                   name="confirm_password"
-                  // error={error}
+                  error={error?.confirm_password}
+                  value={inputs.confirm_password}
                   type="password"
-                  placeholder="eg. alex@email.com"
+                  placeholder="Atleast 8 characters"
                   svg={
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

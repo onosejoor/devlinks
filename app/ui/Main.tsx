@@ -23,7 +23,7 @@ import { PlatformLink } from "../lib/Functions";
 import { useContext, useEffect, useRef, useState } from "react";
 import { Context } from "../components/Context";
 
-export default function MainSection() {
+export default function MainSection({movie}: {movie: any[] | undefined}) {
   const data: PlatformLink[] = [
     {
       id: 1,
@@ -124,6 +124,9 @@ export default function MainSection() {
       regex: "https://stackoverflow.com/users/:username",
     },
   ];
+  console.log(movie);
+  
+  
   const [links, setLinks] = useState<PlatformLink[]>([]);
 
   // useEffect(() => {
