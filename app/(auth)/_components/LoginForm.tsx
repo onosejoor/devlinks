@@ -73,7 +73,7 @@ const LoginForm: React.FC = () => {
 
   return (
     <>
-      <div className=" flex flex-col gap-5 sm:w-[480px] mx-auto w-[calc(100%-100px)]">
+      <div className=" flex flex-col gap-5 md:w-[480px] mx-auto w-[calc(100%-20px)] sm:w-[calc(100%-100px)]">
         <div className="self-center  mb-5">
           <svg
             xmlns="http://www.w3.org/2000/svg"
