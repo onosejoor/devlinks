@@ -4,8 +4,10 @@
 			"path": "."
 		},
 		{
-			"path": "../../design Folder/link-sharing-app/starter-code"
+			"path": "../../design Folder/link-sharing-app"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"typescript.tsdk": "link-sharing\\node_modules\\typescript\\lib"
+	}
 }

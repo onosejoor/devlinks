@@ -1,4 +1,4 @@
-import SignUpForm from "@/app/ui/SignUpForm";
+import SignUpForm from "../_components/SignUpForm";
 
 export default async function Login() {
   return (

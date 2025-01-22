@@ -1,12 +1,18 @@
 "use client";
-import PhoneMockup from "../ui/Phone";
-import { ProfileData } from "../lib/Functions";
-import { ProfileContext } from "../components/Context";
-import Profile from "../ui/Profile";
+import PhoneMockup from "./_components/Phone";
+import { DBPlatformLink, ProfileData } from "../_lib/types";
+import { ProfileContext } from "../_components/Context";
+import Profile from "./Profile";
 import { useState } from "react";
-
-export default function ProfileSection() {
-  const [profile, setProfile] = useState<ProfileData>({
+ 
+export default function ProfileSection({
+  links,
+  userProfile,
+}: {
+  links: DBPlatformLink[] | any[] | undefined;
+  userProfile: ProfileData | null;
+}) {
+  const [profile, setProfile] = useState<ProfileData>(userProfile || {
     fName: "",
     lName: "",
     img: "",
@@ -22,6 +28,7 @@ export default function ProfileSection() {
             fName={profile.fName}
             email={profile.email}
             lName={profile.lName}
+            links={links}
           />
           <Profile />
         </ProfileContext.Provider>

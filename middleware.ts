@@ -1,14 +1,16 @@
 import { MiddlewareConfig, NextRequest, NextResponse } from "next/server";
-import { verifyUser } from "./app/lib/dal";
+import { verifyUser } from "./app/_lib/dal";
 
 export async function middleware(req: NextRequest) {
-  const isverified = await verifyUser();
-  const publicRoutes = ["/login", "/signup"];
+  const isVerified = await verifyUser();
+  const publicRoutes = [/^\/login$/, /^\/fignup$/, /^\/preview\/\w+$/  ];
   const {
     nextUrl: { pathname },
   } = req;
 
-  if (!isverified.isAuth && !publicRoutes.includes(pathname)) {
+  const isPublicRoutes = publicRoutes.some(pattern=> pattern.test(pathname))
+
+  if (!isVerified.isAuth && !isPublicRoutes) {
     return NextResponse.redirect(new URL("/login", req.nextUrl));
   }
 }
