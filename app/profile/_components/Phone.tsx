@@ -76,7 +76,7 @@ export default function PhoneMockup({
               )}
             </div>
           </div>
-          <div className="absolute max-w-[247px] w-full top-[44%] flex flex-col gap-5 m-auto translate-x-[35px]">
+          <div className="absolute bg-white max-w-[247px] max-h-[315px] overflow-y-scroll no-scrollbar w-full top-[43.5%] flex flex-col gap-5 m-auto translate-x-[35px]">
             {links && links?.length > 0
               ? links.map((e) => {
                   return (

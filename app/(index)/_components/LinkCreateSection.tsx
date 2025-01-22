@@ -102,7 +102,7 @@ export default function LinkCreateSection() {
             </p>
           </div>
           <AddLinkButton
-            disabled={links.length === 5}
+            disabled={links.length === 14}
             setContextLinks={setContextLinks}
           />
         </div>

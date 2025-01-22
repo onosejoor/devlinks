@@ -103,7 +103,7 @@ export async function insertLink(links: PlatformLink[]) {
   }
 }
 
-export async function getLinks({ payload }: { payload?: string }) {
+export async function getLinks(payload?: string) {
   const checkUserAuth = await verifyUser();
 
   const email = payload || checkUserAuth.email;
@@ -156,7 +156,7 @@ export async function getProfile() {
         message: profileError.message,
       };
     }
-    const { data: links, success } = await getLinks({ payload: "" });
+    const { data: links, success } = await getLinks("");
     if (!success) {
       return {
         success: false,
@@ -205,7 +205,7 @@ export async function getPreviewProfile(payload: string) {
         message: profileError.message,
       };
     }
-    const { data: links, success } = await getLinks({ payload: payload });
+    const { data: links, success } = await getLinks(payload);
     if (!success) {
       return {
         success: false,

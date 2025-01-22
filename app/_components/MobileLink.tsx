@@ -19,7 +19,7 @@ export default function MobileLink({ icon, className, name }: Props) {
           backgroundColor: bgColor,
           border: bgColor === "white" ? "1px solid darkGray" : "initial",
         }}
-        className={`${className} bg-gray w-full rounded-md h-[45px] flex justify-between p-3 items-center`}
+        className={`${className} bg-gray w-full rounded-md h-[47px] flex justify-between p-3 items-center`}
       >
         <div className="flex gap-2 items-center">
           <span className="*:fill-white">{getIcon?.icon || icon}</span>
