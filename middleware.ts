@@ -3,7 +3,7 @@ import { verifyUser } from "./app/_lib/dal";
 
 export async function middleware(req: NextRequest) {
   const isVerified = await verifyUser();
-  const publicRoutes = [/^\/login$/, /^\/fignup$/, /^\/preview\/\w+$/  ];
+  const publicRoutes = [/^\/login$/, /^\/signup$/, /^\/preview\/\w+$/  ];
   const {
     nextUrl: { pathname },
   } = req;

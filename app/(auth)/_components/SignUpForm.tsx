@@ -58,7 +58,7 @@ const SignUpForm: React.FC = () => {
 
     const response = sendData.data;
 
-    if (response.success) {
+    if (response.success === true) {
       showToast({
         saveIcon: true,
         message: response.message,
