@@ -35,7 +35,7 @@ const Toast: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   const { message, saveIcon, variants, position } = toast.info || {};
-  const duration = 500000;
+  const duration = 5000;
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
