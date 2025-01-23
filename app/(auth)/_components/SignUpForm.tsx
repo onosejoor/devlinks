@@ -92,7 +92,7 @@ const SignUpForm: React.FC = () => {
 
   return (
     <>
-      <div className=" flex flex-col gap-5 w-[480px] ">
+      <div className=" flex flex-col gap-5 xs:w-[calc(100%-20px)] sm:!w-[480px] ">
         <div className="self-center  mb-5">
           <svg
             xmlns="http://www.w3.org/2000/svg"

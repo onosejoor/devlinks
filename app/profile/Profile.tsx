@@ -78,7 +78,7 @@ export default function Profile() {
             Add your details to create a personal touch to your profile.
           </p>
         </div>
-        <div className="bg-veryLightGray p-3 rounded-md grid grid-cols-3  gap-3 items-center">
+        <div className="bg-veryLightGray p-3 rounded-md justify-items-center text-center md:text-left grid md:grid-cols-2 grid-cols-1 lg:grid-cols-3  gap-3 items-center">
           <p className="text-darkGray font-semibold">Profile Picture</p>
 
           <div
@@ -127,7 +127,7 @@ export default function Profile() {
           </div>
         </div>
         <div className="flex flex-col gap-5 rounded-md bg-veryLightGray p-3">
-          <div className="flex justify-between items-center gap-10">
+          <div className="flex flex-col sm:flex-row gap-5 sm:gap-10 justify-between sm:sm:items-center">
             <label
               htmlFor="first name"
               className="capitalize whitespace-nowrap text-darkGray"
@@ -144,7 +144,7 @@ export default function Profile() {
               className="placeholder:text-darkGray bg-white  px-3 rounded-md border border-transparent"
             />
           </div>
-          <div className="flex justify-between items-center gap-10">
+          <div className="flex flex-col sm:flex-row gap-5 justify-between sm:items-center sm:gap-10">
             <label
               htmlFor="last name"
               className="capitalize text-darkGray whitespace-nowrap"
@@ -161,7 +161,7 @@ export default function Profile() {
               className="placeholder:text-darkGray bg-white  px-3 rounded-md border border-transparent"
             />
           </div>
-          <div className="flex justify-between items-center gap-10">
+          <div className="flex flex-col sm:flex-row gap-5 justify-between sm:items-center sm:gap-10">
             <label
               htmlFor="Email"
               className="capitalize text-darkGray whitespace-nowrap"
